@@ -1,1 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Therizen Services - Aircon Repair, Aircon Cleaning & Maintenance, Plumbing and Pest Control in Naic, Cavite and nearby areas.">
+<title>Therizen Services | Home & Property Maintenance</title>
+<style>
+:root {
+  --text:#17212b; --muted:#64707d; --line:#e7ebef; --soft:#f6f8fa; --white:#fff;
+  --accent:#1d6fe8; --accent-dark:#1257bc; --success:#16855b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text);background:#fff;line-height:1.6}
+a{color:inherit;text-decoration:none}
+.container{width:min(1120px,92%);margin:auto}
+header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{height:70px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{font-weight:800;font-size:1.18rem;letter-spacing:-.4px}
+.logo span{color:var(--accent)}
+nav{display:flex;gap:25px;align-items:center}
+nav a{font-size:.94rem;color:#53606d}
+nav a:hover{color:var(--accent)}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border-radius:10px;border:1px solid transparent;font-weight:700;cursor:pointer;transition:.2s}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-dark);transform:translateY(-1px)}
+.btn-light{background:#fff;border-color:var(--line)}
+.hero{padding:88px 0 70px;background:linear-gradient(180deg,#f7faff 0%,#fff 90%)}
+.hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:55px;align-items:center}
+.badge{display:inline-flex;padding:7px 11px;border:1px solid #dce8f9;background:#fff;border-radius:999px;color:var(--accent);font-size:.83rem;font-weight:700;margin-bottom:20px}
+h1{font-size:clamp(2.5rem,6vw,4.7rem);line-height:1.03;letter-spacing:-2.8px;max-width:750px}
+.hero p{color:var(--muted);font-size:1.08rem;max-width:650px;margin:22px 0 28px}
+.actions{display:flex;gap:12px;flex-wrap:wrap}
+.hero-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:28px;box-shadow:0 18px 50px rgba(24,45,70,.08)}
+.hero-card h3{font-size:1.05rem;margin-bottom:15px}
+.quick{display:grid;gap:12px}
+.quick div{display:flex;justify-content:space-between;gap:20px;padding:13px 0;border-bottom:1px solid var(--line);font-size:.93rem}
+.quick div:last-child{border-bottom:0}
+.quick span{color:var(--muted)}
+section{padding:80px 0}
+.section-head{max-width:680px;margin-bottom:35px}
+.eyebrow{color:var(--accent);font-weight:800;font-size:.8rem;text-transform:uppercase;letter-spacing:1.4px;margin-bottom:8px}
+h2{font-size:clamp(2rem,4vw,3rem);letter-spacing:-1.5px;line-height:1.15}
+.section-head p{color:var(--muted);margin-top:12px}
+.services{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.service-card{border:1px solid var(--line);border-radius:16px;padding:23px;background:#fff;transition:.2s}
+.service-card:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(24,45,70,.07)}
+.service-icon{font-size:1.6rem;margin-bottom:12px}
+.service-card h3{font-size:1.05rem;margin-bottom:8px}
+.service-card p{font-size:.9rem;color:var(--muted);min-height:115px}
+.price{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:.84rem;color:var(--muted)}
+.price strong{display:block;color:var(--text);font-size:1rem;margin-top:2px}
+.pricing{background:var(--soft)}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px;background:#fff}
+table{width:100%;border-collapse:collapse;min-width:650px}
+th,td{padding:14px 17px;text-align:left;border-bottom:1px solid var(--line);font-size:.9rem}
+th{background:#fafbfc;font-size:.8rem;text-transform:uppercase;letter-spacing:.7px}
+tr:last-child td{border-bottom:0}
+.booking-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:45px}
+.booking-info p{color:var(--muted);margin:14px 0}
+.info-list{list-style:none;margin-top:20px;display:grid;gap:10px}
+.info-list li{display:flex;gap:10px}
+form{border:1px solid var(--line);border-radius:18px;padding:26px;background:#fff;box-shadow:0 15px 40px rgba(24,45,70,.06)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+label{font-size:.82rem;font-weight:700;display:block;margin-bottom:6px}
+input,select,textarea{width:100%;border:1px solid #d9dfe5;border-radius:9px;padding:12px 13px;font:inherit;outline:none;background:#fff}
+input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(29,111,232,.1)}
+.field{margin-bottom:15px}
+.full{grid-column:1/-1}
+textarea{min-height:105px;resize:vertical}
+.form-note{font-size:.78rem;color:var(--muted);margin-top:10px}
+.notice{display:none;margin-top:14px;padding:12px 14px;border-radius:9px;background:#eaf8f1;color:#146a4b;font-size:.88rem}
+.faqs{max-width:850px}
+details{border-bottom:1px solid var(--line);padding:18px 0}
+summary{cursor:pointer;font-weight:700;list-style:none;padding-right:30px;position:relative}
+summary::-webkit-details-marker{display:none}
+summary:after{content:"+";position:absolute;right:0;font-size:1.2rem;color:var(--muted)}
+details[open] summary:after{content:"−"}
+details p{color:var(--muted);margin-top:10px;max-width:750px}
+.terms{background:var(--soft)}
+.terms-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.term{padding:22px;background:#fff;border:1px solid var(--line);border-radius:14px}
+.term h3{font-size:1rem;margin-bottom:7px}
+.term p{color:var(--muted);font-size:.9rem}
+.cta{padding:70px 0}
+.cta-box{background:#15202b;color:#fff;border-radius:22px;padding:42px;display:flex;align-items:center;justify-content:space-between;gap:25px}
+.cta-box p{color:#bdc7d0;margin-top:7px}
+footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:.85rem}
+.footer-row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.mobile-menu{display:none}
+@media(max-width:900px){
+ .hero-grid,.booking-grid{grid-template-columns:1fr}
+ .services{grid-template-columns:1fr 1fr}
+ .terms-grid{grid-template-columns:1fr}
+}
+@media(max-width:650px){
+ nav{display:none} .mobile-menu{display:block}
+ .hero{padding:60px 0} section{padding:60px 0}
+ h1{letter-spacing:-1.8px}
+ .services{grid-template-columns:1fr}
+ .service-card p{min-height:0}
+ .form-grid{grid-template-columns:1fr} .full{grid-column:auto}
+ .cta-box{display:block;padding:30px} .cta-box .btn{margin-top:20px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <a class="logo" href="#home">Therizen <span>Services</span></a>
+    <nav>
+      <a href="#services">Services</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#booking">Booking</a>
+      <a href="#faqs">FAQs</a>
+    </nav>
+    <a class="btn btn-primary" href="#booking">Book a Service</a>
+  </div>
+</header>
 
+<main id="home">
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="badge">Home & Property Maintenance</div>
+      <h1>Reliable service for your home.</h1>
+      <p>Aircon, plumbing, and pest control services in Naic, Cavite and nearby areas. Simple booking, clear starting prices, and professional service.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#booking">Request a Booking</a>
+        <a class="btn btn-light" href="#services">View Services</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <h3>Service Information</h3>
+      <div class="quick">
+        <div><span>📍 Service Area</span><strong>Naic, Cavite</strong></div>
+        <div><span>🕐 Hours</span><strong>7 AM – 6 PM</strong></div>
+        <div><span>🔧 Services</span><strong>4 categories</strong></div>
+        <div><span>💬 Quotes</span><strong>Starting prices</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">What we do</div>
+      <h2>Services made simple.</h2>
+      <p>Choose the service you need. If you are not sure what the problem is, just describe your concern—we can assess it during inspection.</p>
+    </div>
+    <div class="services"><article class="service-card">
+      <div class="service-icon">❄️</div>
+      <h3>Aircon Repair</h3>
+      <p>Emergency aircon problems, diagnostics, minor repairs, electrical/component issues and refrigerant-related service.</p>
+      <div class="price">Starting at <strong>₱350+</strong></div>
+    </article>
+<article class="service-card">
+      <div class="service-icon">🧼</div>
+      <h3>Aircon Cleaning &amp; Maintenance</h3>
+      <p>Window-type and split-type cleaning, deep/chemical cleaning and preventive maintenance.</p>
+      <div class="price">Starting at <strong>₱700+</strong></div>
+    </article>
+<article class="service-card">
+      <div class="service-icon">🔧</div>
+      <h3>Plumbing</h3>
+      <p>Emergency leaks, unclogging, minor repairs, pipe leak repair and planned plumbing projects.</p>
+      <div class="price">Starting at <strong>₱350+</strong></div>
+    </article>
+<article class="service-card">
+      <div class="service-icon">🛡️</div>
+      <h3>Pest Control</h3>
+      <p>General pest, ant, mosquito, termite inspection/treatment and rodent control.</p>
+      <div class="price">Starting at <strong>₱500+</strong></div>
+    </article></div>
+  </div>
+</section>
+
+<section id="pricing" class="pricing">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Starting prices</div>
+      <h2>Clear pricing, before the work starts.</h2>
+      <p>Prices below are indicative starting prices. Final pricing can change based on the actual condition, labor, materials, parts, accessibility, property/unit size, and location.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Service</th><th>Starting Price</th></tr></thead>
+        <tbody>
+          <tr><td>Aircon Check-up</td><td>₱350</td></tr>
+          <tr><td>Aircon Minor Repair</td><td>₱500+</td></tr>
+          <tr><td>Window-Type Cleaning</td><td>₱700</td></tr>
+          <tr><td>Window-Type Deep Cleaning</td><td>₱1,000+</td></tr>
+          <tr><td>Split-Type Cleaning</td><td>₱1,200</td></tr>
+          <tr><td>Split-Type Deep Cleaning</td><td>₱1,500+</td></tr>
+          <tr><td>Plumbing Assessment</td><td>₱350</td></tr>
+          <tr><td>Minor Plumbing Repair</td><td>₱500+</td></tr>
+          <tr><td>Drain / Sink Unclogging</td><td>₱500+</td></tr>
+          <tr><td>Toilet Unclogging</td><td>₱600+</td></tr>
+          <tr><td>Pipe Leak Repair</td><td>₱800+</td></tr>
+          <tr><td>Pest Inspection</td><td>₱500</td></tr>
+          <tr><td>General Pest Treatment</td><td>₱1,500+</td></tr>
+          <tr><td>Termite Inspection</td><td>₱500</td></tr>
+          <tr><td>Termite Treatment</td><td>₱3,500+</td></tr>
+          <tr><td>Rodent Control</td><td>₱2,000+</td></tr>
+          <tr><td>Site Inspection / Estimate</td><td>₱350+</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="booking">
+  <div class="container booking-grid">
+    <div class="booking-info">
+      <div class="eyebrow">Booking</div>
+      <h2>Tell us what you need.</h2>
+      <p>Fill out the form so the service team has the basic information needed to review your request.</p>
+      <ul class="info-list">
+        <li>✓ Full name and contact number</li>
+        <li>✓ Complete service address</li>
+        <li>✓ Preferred date and time</li>
+        <li>✓ Service and problem description</li>
+        <li>✓ Photos/videos when applicable</li>
+      </ul>
+      <p><strong>Important:</strong> Submitting this form is a booking request, not an automatic confirmation. Appointment schedules are subject to technician availability.</p>
+    </div>
+
+    <form id="bookingForm">
+      <div class="form-grid">
+        <div class="field"><label for="name">Full Name *</label><input id="name" name="name" required placeholder="Your full name"></div>
+        <div class="field"><label for="phone">Contact Number *</label><input id="phone" name="phone" required placeholder="09XXXXXXXXX"></div>
+        <div class="field full"><label for="address">Complete Service Address *</label><input id="address" name="address" required placeholder="House/Unit, Street, Barangay, City/Municipality"></div>
+        <div class="field"><label for="service">Service Requested *</label>
+          <select id="service" name="service" required>
+            <option value="">Select a service</option>
+            <option>Aircon Repair</option><option>Aircon Cleaning & Maintenance</option><option>Plumbing</option><option>Pest Control</option>
+          </select>
+        </div>
+        <div class="field"><label for="date">Preferred Date *</label><input id="date" type="date" name="date" required></div>
+        <div class="field"><label for="time">Preferred Time *</label><input id="time" type="time" name="time" required></div>
+        <div class="field"><label for="units">Additional Details</label><input id="units" name="units" placeholder="e.g. 2 aircon units / termite concern"></div>
+        <div class="field full"><label for="problem">Problem / Concern *</label><textarea id="problem" name="problem" required placeholder="Tell us what is happening..."></textarea></div>
+        <div class="field full"><label for="media">Photo / Video Link (optional)</label><input id="media" name="media" placeholder="Paste a Google Drive/Facebook/other share link"></div>
+        <div class="full">
+          <button class="btn btn-primary" style="width:100%" type="submit">Submit Booking Request</button>
+          <p class="form-note">By submitting, you agree that the information provided is for service scheduling and assessment.</p>
+          <div class="notice" id="notice">Your request has been prepared. Connect this form to your n8n webhook to send it to your automation.</div>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section id="faqs">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">FAQs</div>
+      <h2>Frequently asked questions.</h2>
+      <p>Quick answers based on our current service information.</p>
+    </div>
+    <div class="faqs"><details><summary>Where are you located?</summary><p>We are based in Naic, Cavite and may accommodate nearby areas depending on technician availability and schedule.</p></details>
+<details><summary>What are your operating hours?</summary><p>Our regular service hours are Monday–Sunday, 7:00 AM to 6:00 PM.</p></details>
+<details><summary>Do you offer same-day service?</summary><p>Same-day service may be available depending on technician availability, location, and urgency.</p></details>
+<details><summary>Can I request a quote first?</summary><p>Yes. You may request an estimate. For accurate pricing, we may ask for photos, videos, service details, or an actual site inspection.</p></details>
+<details><summary>Are the prices on the page fixed?</summary><p>Prices are generally starting prices unless specifically identified as fixed. Final pricing may depend on the actual condition and requirements.</p></details>
+<details><summary>Is there an additional charge for locations that are far away?</summary><p>Possibly. Customers outside the regular service area may have an additional travel or transportation fee, which will be explained before confirmation.</p></details>
+<details><summary>Do I need an inspection first?</summary><p>For simple services, not always. Repairs, major plumbing work, termite treatment, and complicated aircon problems may require inspection before a final quotation.</p></details>
+<details><summary>Can I send a photo or video?</summary><p>Yes. Photos and videos are highly recommended because they can help us understand the concern before scheduling.</p></details>
+<details><summary>Do I need to know the exact problem before booking?</summary><p>No. You can simply describe what you are experiencing. The technician can assess the actual problem during inspection.</p></details>
+<details><summary>Do you accept emergency service requests?</summary><p>Yes, emergency service requests may be accommodated during operating hours depending on technician availability and location.</p></details>
+<details><summary>What should I do if there is a major water leak?</summary><p>If possible and safe, turn off the nearest water valve or main water supply and keep electrical equipment away from water.</p></details>
+<details><summary>What should I do if my aircon smells like it is burning?</summary><p>Turn off the aircon immediately. If safe, disconnect the power supply. Do not continue using the unit until it has been inspected.</p></details>
+<details><summary>How much does aircon cleaning cost?</summary><p>Window-type cleaning starts around ₱700; split-type cleaning starts around ₱1,200; deep or chemical cleaning is approximately ₱1,000–₱2,500+. Final price depends on the unit and service required.</p></details>
+<details><summary>How much does plumbing service cost?</summary><p>Plumbing assessment or minor service starts around ₱350–₱500. Actual repair costs depend on the problem, labor, and materials.</p></details>
+<details><summary>How much does pest control cost?</summary><p>General pest treatment may start around ₱1,500. Termite and larger infestations may require inspection and a customized quotation.</p></details></div>
+  </div>
+</section>
+
+<section class="terms">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Before you book</div>
+      <h2>Good to know.</h2>
+    </div>
+    <div class="terms-grid">
+      <div class="term"><h3>Starting prices</h3><p>Prices shown are generally starting prices. Final quotations may depend on actual conditions and requirements.</p></div>
+      <div class="term"><h3>Additional work</h3><p>Additional parts, materials, labor or travel fees require customer approval before additional chargeable work is performed.</p></div>
+      <div class="term"><h3>Service area</h3><p>Naic has no additional travel fee for standard service areas. Nearby and farther locations may have applicable travel charges explained before confirmation.</p></div>
+      <div class="term"><h3>Safety</h3><p>Keep children and pets away from the work area. For aircon burning smell or electrical danger, turn off the unit and disconnect power if it can be done safely.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container">
+    <div class="cta-box">
+      <div><h2>Need a service?</h2><p>Send your details and preferred schedule today.</p></div>
+      <a class="btn btn-primary" href="#booking">Book Now</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container footer-row">
+    <div><strong>Therizen Services</strong><br>Home & property maintenance services.</div>
+    <div>Naic, Cavite & nearby areas · 7:00 AM–6:00 PM</div>
+  </div>
+</footer>
+
+<script>
+const form = document.getElementById("bookingForm");
+const notice = document.getElementById("notice");
+
+// Replace this with your n8n webhook URL when you are ready.
+// Example: const N8N_WEBHOOK_URL = "https://YOUR-N8N-DOMAIN/webhook/your-path";
+const N8N_WEBHOOK_URL = "";
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const data = Object.fromEntries(new FormData(form).entries());
+  const button = form.querySelector("button");
+  button.disabled = true;
+  button.textContent = "Sending...";
+
+  try {
+    if (!N8N_WEBHOOK_URL) {
+      notice.style.display = "block";
+      notice.textContent = "Demo mode: your form works on the website, but it is not connected to n8n yet. Add your n8n webhook URL in the code to receive bookings automatically.";
+    } else {
+      const response = await fetch(N8N_WEBHOOK_URL, {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({
+          ...data,
+          source: "Therizen Services Website",
+          submittedAt: new Date().toISOString()
+        })
+      });
+      if (!response.ok) throw new Error("Request failed");
+      notice.style.display = "block";
+      notice.textContent = "Thank you! Your booking request was sent. The service team will review your request and confirm availability.";
+      form.reset();
+    }
+  } catch (err) {
+    notice.style.display = "block";
+    notice.style.background = "#fff0f0";
+    notice.style.color = "#a42a2a";
+    notice.textContent = "We couldn't send the request right now. Please try again or contact the service team directly.";
+  } finally {
+    button.disabled = false;
+    button.textContent = "Submit Booking Request";
+  }
+});
+</script>
+</body>
+</html>
