@@ -352,33 +352,42 @@ const N8N_WEBHOOK_URL = "https://therizen.app.n8n.cloud/webhook-test/cca9edd4-eb
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
-const formData = new FormData(form);
-formData.append("source", "Therizen Services Website");
-formData.append("submittedAt", new Date().toISOString());
-  const button = form.querySelector("button");
+
+  const formData = new FormData(form);
+  formData.append("source", "Therizen Services Website");
+  formData.append("submittedAt", new Date().toISOString());
+
+  const button = form.querySelector('button[type="submit"]');
   button.disabled = true;
   button.textContent = "Sending...";
 
+  // Reset any previous error styling/message before a new attempt.
+  notice.style.display = "none";
+  notice.style.background = "";
+  notice.style.color = "";
+
   try {
     if (!N8N_WEBHOOK_URL) {
-      notice.style.display = "block";
-      notice.textContent = "Demo mode: your form works on the website, but it is not connected to n8n yet. Add your n8n webhook URL in the code to receive bookings automatically.";
-    } else {
-      const response = await fetch(N8N_WEBHOOK_URL, {
-        method: "POST",
-        headers: {"Content-Type":"application/json"},
-        body: JSON.stringify({
-          ...data,
-          source: "Therizen Services Website",
-          submittedAt: new Date().toISOString()
-        })
-      });
-      if (!response.ok) throw new Error("Request failed");
-      notice.style.display = "block";
-      notice.textContent = "Thank you! Your booking request was sent. The service team will review your request and confirm availability.";
-      form.reset();
+      throw new Error("The n8n webhook URL has not been configured.");
     }
+
+    const response = await fetch(N8N_WEBHOOK_URL, {
+      method: "POST",
+      body: formData
+    });
+
+    if (!response.ok) {
+      throw new Error(`Webhook request failed with status ${response.status}`);
+    }
+
+    notice.style.display = "block";
+    notice.style.background = "#eaf8f1";
+    notice.style.color = "#146a4b";
+    notice.textContent = "Thank you! Your booking request was sent. The service team will review your request and confirm availability.";
+    form.reset();
+
   } catch (err) {
+    console.error("Booking submission failed:", err);
     notice.style.display = "block";
     notice.style.background = "#fff0f0";
     notice.style.color = "#a42a2a";
