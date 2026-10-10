@@ -339,7 +339,7 @@ const notice = document.getElementById("notice");
 
 // Replace this with your n8n webhook URL when you are ready.
 // Example: const N8N_WEBHOOK_URL = "https://YOUR-N8N-DOMAIN/webhook/your-path";
-const N8N_WEBHOOK_URL = https://therizen.app.n8n.cloud/webhook-test/cca9edd4-ebdb-437b-b9bd-09a349450fa5
+const N8N_WEBHOOK_URL = "https://therizen.app.n8n.cloud/webhook-test/cca9edd4-ebdb-437b-b9bd-09a349450fa5";
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -354,7 +354,7 @@ form.addEventListener("submit", async (e) => {
       notice.textContent = "Demo mode: your form works on the website, but it is not connected to n8n yet. Add your n8n webhook URL in the code to receive bookings automatically.";
     } else {
       const response = await fetch(N8N_WEBHOOK_URL, {
-        method: "POST",
+        method: "GET",
         headers: {"Content-Type":"application/json"},
         body: JSON.stringify({
           ...data,
