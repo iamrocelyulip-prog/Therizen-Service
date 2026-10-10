@@ -253,18 +253,38 @@ footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-s
     <option value="undecided">Not sure yet</option>
   </select>
 </div>
-
         <div class="field full"><label for="address">Complete Service Address *</label><input id="address" name="address" required placeholder="House/Unit, Street, Barangay, City/Municipality"></div>
-        <div class="field"><label for="service">Service Requested *</label>
-          <select id="service" name="service" required>
-            <option value="">Select a service</option>
-            <option>Aircon Repair</option><option>Aircon Cleaning & Maintenance</option><option>Plumbing</option><option>Pest Control</option>
-          </select>
-        </div>
+        
+<div class="field">
+  <label for="service">Service Requested *</label>
+  <select id="service" name="service" required>
+    <option value="">Select a service</option>
+    <option value="aircon_repair">Aircon Repair</option>
+    <option value="aircon_cleaning">Aircon Cleaning &amp; Maintenance</option>
+    <option value="plumbing">Plumbing</option>
+    <option value="pest_control">Pest Control</option>
+  </select>
+</div>
+
+<div class="field">
+  <label for="problem">Problem / Concern *</label>
+  <select id="problem" name="problem" required disabled>
+    <option value="">Select a service first</option>
+  </select>
+</div>
+
+<div class="field full">
+  <label for="problemDetails">Additional Problem Details</label>
+  <textarea
+    id="problemDetails"
+    name="problemDetails"
+    placeholder="Add more details about the problem (optional)..."
+  ></textarea>
+</div>
+
         <div class="field"><label for="date">Preferred Date *</label><input id="date" type="date" name="date" required></div>
         <div class="field"><label for="time">Preferred Time *</label><input id="time" type="time" name="time" required></div>
         <div class="field"><label for="units">Additional Details</label><input id="units" name="units" placeholder="e.g. 2 aircon units / termite concern"></div>
-        <div class="field full"><label for="problem">Problem / Concern *</label><textarea id="problem" name="problem" required placeholder="Tell us what is happening..."></textarea></div>
         <div class="field full">
           <label for="media">Upload Photo / Video (optional)</label>
           <input
@@ -345,30 +365,171 @@ footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-s
 <script>
 const form = document.getElementById("bookingForm");
 const notice = document.getElementById("notice");
+const serviceSelect = document.getElementById("service");
+const problemSelect = document.getElementById("problem");
+const problemDetails = document.getElementById("problemDetails");
 
-// Replace this with your n8n webhook URL when you are ready.
-// Example: const N8N_WEBHOOK_URL = "https://YOUR-N8N-DOMAIN/webhook/your-path";
-const N8N_WEBHOOK_URL = "https://therizen.app.n8n.cloud/webhook-test/cca9edd4-ebdb-437b-b9bd-09a349450fa5";
+// Use your n8n webhook URL here.
+const N8N_WEBHOOK_URL =
+  "https://therizen.app.n8n.cloud/webhook-test/cca9edd4-ebdb-437b-b9bd-09a349450fa5";
 
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+// Problems grouped by service.
+const problemOptions = {
+  aircon_repair: [
+    { value: "not_cooling", label: "Not cooling", urgency: "normal" },
+    { value: "weak_cooling", label: "Weak cooling", urgency: "normal" },
+    { value: "unusual_noise", label: "Unusual noise", urgency: "normal" },
+    { value: "water_dripping", label: "Water dripping", urgency: "normal" },
+    { value: "not_turning_on", label: "Not turning on", urgency: "normal" },
+    { value: "remote_not_working", label: "Remote not working", urgency: "normal" },
+    { value: "routine_checkup", label: "Routine check-up", urgency: "normal" },
+    { value: "burning_smell", label: "Burning smell", urgency: "emergency", safety: true },
+    { value: "smoke", label: "Smoke", urgency: "emergency", safety: true },
+    { value: "sparks", label: "Sparks / electrical danger", urgency: "emergency", safety: true },
+    { value: "overheating", label: "Overheating", urgency: "urgent" },
+    { value: "other", label: "Other problem", urgency: "unknown" }
+  ],
 
-  const formData = new FormData(form);
-  formData.append("source", "Therizen Services Website");
-  formData.append("submittedAt", new Date().toISOString());
+  aircon_cleaning: [
+    { value: "routine_cleaning", label: "Routine cleaning", urgency: "normal" },
+    { value: "dirty_filter", label: "Dirty filter", urgency: "normal" },
+    { value: "weak_airflow", label: "Weak airflow", urgency: "normal" },
+    { value: "bad_odor", label: "Bad odor", urgency: "normal" },
+    { value: "preventive_maintenance", label: "Preventive maintenance", urgency: "normal" },
+    { value: "clogged_drain", label: "Clogged drain", urgency: "normal" },
+    { value: "heavy_water_leak", label: "Heavy water leakage", urgency: "urgent" },
+    { value: "burning_smell", label: "Burning smell", urgency: "emergency", safety: true },
+    { value: "smoke", label: "Smoke", urgency: "emergency", safety: true },
+    { value: "electrical_danger", label: "Electrical danger", urgency: "emergency", safety: true },
+    { value: "other", label: "Other problem", urgency: "unknown" }
+  ],
+
+  plumbing: [
+    { value: "dripping_faucet", label: "Dripping faucet", urgency: "normal" },
+    { value: "clogged_sink", label: "Clogged sink", urgency: "normal" },
+    { value: "slow_drainage", label: "Slow drainage", urgency: "normal" },
+    { value: "low_water_pressure", label: "Low water pressure", urgency: "normal" },
+    { value: "running_toilet", label: "Running toilet", urgency: "normal" },
+    { value: "pipe_inspection", label: "Pipe inspection", urgency: "normal" },
+    { value: "burst_pipe", label: "Burst pipe", urgency: "emergency" },
+    { value: "flooding", label: "Flooding", urgency: "emergency" },
+    { value: "major_water_leak", label: "Major water leak", urgency: "emergency" },
+    { value: "sewage_backup", label: "Sewage backup", urgency: "urgent" },
+    { value: "water_near_electricity", label: "Water near electrical equipment", urgency: "emergency", safety: true },
+    { value: "other", label: "Other problem", urgency: "unknown" }
+  ],
+
+  pest_control: [
+    { value: "cockroaches", label: "Cockroaches", urgency: "normal" },
+    { value: "ants", label: "Ants", urgency: "normal" },
+    { value: "termites", label: "Termites", urgency: "normal" },
+    { value: "rats", label: "Rats", urgency: "normal" },
+    { value: "mosquitoes", label: "Mosquitoes", urgency: "normal" },
+    { value: "bed_bugs", label: "Bed bugs", urgency: "normal" },
+    { value: "preventive_treatment", label: "Preventive treatment", urgency: "normal" },
+    { value: "wasp_bee_swarm", label: "Bee / wasp swarm", urgency: "urgent" },
+    { value: "venomous_snake", label: "Suspected venomous snake", urgency: "emergency", safety: true },
+    { value: "pesticide_exposure", label: "Pesticide exposure", urgency: "emergency", safety: true },
+    { value: "breathing_difficulty", label: "Breathing difficulty after chemical exposure", urgency: "emergency", safety: true },
+    { value: "other", label: "Other problem", urgency: "unknown" }
+  ]
+};
+
+// Update the problem dropdown whenever the service changes.
+function updateProblems() {
+  const options = problemOptions[serviceSelect.value] || [];
+
+  problemSelect.replaceChildren();
+
+  const firstOption = document.createElement("option");
+  firstOption.value = "";
+  firstOption.textContent = options.length
+    ? "Select your problem"
+    : "Select a service first";
+
+  problemSelect.appendChild(firstOption);
+
+  for (const problem of options) {
+    const option = document.createElement("option");
+    option.value = problem.value;
+    option.textContent = problem.label;
+    problemSelect.appendChild(option);
+  }
+
+  problemSelect.disabled = options.length === 0;
+}
+
+serviceSelect.addEventListener("change", updateProblems);
+
+// Keywords that indicate a safety risk.
+const safetyKeywords = [
+  "burning smell", "burnt smell", "smoke", "sparks",
+  "electrical danger", "electrical hazard", "exposed wire",
+  "sunog", "nasusunog", "water near electrical",
+  "venomous snake", "snake inside", "pesticide exposure",
+  "chemical exposure", "poisoning", "difficulty breathing",
+  "hirap huminga", "water near electricity"
+];
+
+const emergencyKeywords = [
+  ...safetyKeywords,
+  "burst pipe", "burst pipes", "flooding",
+  "major water leak", "sewage backup"
+];
+
+function containsKeyword(text, keywords) {
+  return keywords.some(keyword => text.includes(keyword));
+}
+
+// Classify urgency and safety before sending the request.
+function classifyRequest() {
+  const selected = (problemOptions[serviceSelect.value] || [])
+    .find(item => item.value === problemSelect.value);
+
+  const details = (problemDetails.value || "")
+    .toLowerCase()
+    .trim();
+
+  const combinedText =
+    `${selected ? selected.label : ""} ${details}`.toLowerCase();
+
+  const safetyFlag = Boolean(
+    (selected && selected.safety) ||
+    containsKeyword(combinedText, safetyKeywords)
+  );
+
+  let urgency = selected ? selected.urgency : "unknown";
+
+  if (containsKeyword(combinedText, emergencyKeywords)) {
+    urgency = "emergency";
+  }
+
+  return { urgency, safetyFlag };
+}
+
+// One submit handler only.
+form.addEventListener("submit", async event => {
+  event.preventDefault();
 
   const button = form.querySelector('button[type="submit"]');
+  const classification = classifyRequest();
+
+  // Keep the selected photo/video in FormData.
+  const formData = new FormData(form);
+
+  formData.set("source", "Therizen Services Website");
+  formData.set("submittedAt", new Date().toISOString());
+  formData.set("urgency", classification.urgency);
+  formData.set("safety_flag", String(classification.safetyFlag));
+
   button.disabled = true;
   button.textContent = "Sending...";
 
-  // Reset any previous error styling/message before a new attempt.
   notice.style.display = "none";
-  notice.style.background = "";
-  notice.style.color = "";
 
   try {
     if (!N8N_WEBHOOK_URL) {
-      throw new Error("The n8n webhook URL has not been configured.");
+      throw new Error("Webhook URL is missing.");
     }
 
     const response = await fetch(N8N_WEBHOOK_URL, {
@@ -377,26 +538,35 @@ form.addEventListener("submit", async (e) => {
     });
 
     if (!response.ok) {
-      throw new Error(`Webhook request failed with status ${response.status}`);
+      throw new Error(`Webhook failed with status ${response.status}`);
     }
 
     notice.style.display = "block";
     notice.style.background = "#eaf8f1";
     notice.style.color = "#146a4b";
-    notice.textContent = "Thank you! Your booking request was sent. The service team will review your request and confirm availability.";
-    form.reset();
+    notice.textContent =
+      "Thank you! Your request was sent successfully. Our team will review your request and confirm availability.";
 
-  } catch (err) {
-    console.error("Booking submission failed:", err);
+    form.reset();
+    updateProblems();
+
+  } catch (error) {
+    console.error("Booking submission failed:", error);
+
     notice.style.display = "block";
     notice.style.background = "#fff0f0";
     notice.style.color = "#a42a2a";
-    notice.textContent = "We couldn't send the request right now. Please try again or contact the service team directly.";
+    notice.textContent =
+      "We couldn't send your request. Please try again or contact the service team directly.";
+
   } finally {
     button.disabled = false;
     button.textContent = "Submit Booking Request";
   }
 });
+
+// Initialize the problem dropdown on page load.
+updateProblems();
 </script>
 </body>
 </html>
