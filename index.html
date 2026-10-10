@@ -354,7 +354,7 @@ form.addEventListener("submit", async (e) => {
       notice.textContent = "Demo mode: your form works on the website, but it is not connected to n8n yet. Add your n8n webhook URL in the code to receive bookings automatically.";
     } else {
       const response = await fetch(N8N_WEBHOOK_URL, {
-        method: "GET",
+        method: "POST",
         headers: {"Content-Type":"application/json"},
         body: JSON.stringify({
           ...data,
