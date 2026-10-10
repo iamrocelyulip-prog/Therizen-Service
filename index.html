@@ -265,7 +265,16 @@ footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-s
         <div class="field"><label for="time">Preferred Time *</label><input id="time" type="time" name="time" required></div>
         <div class="field"><label for="units">Additional Details</label><input id="units" name="units" placeholder="e.g. 2 aircon units / termite concern"></div>
         <div class="field full"><label for="problem">Problem / Concern *</label><textarea id="problem" name="problem" required placeholder="Tell us what is happening..."></textarea></div>
-        <div class="field full"><label for="media">Photo / Video Link (optional)</label><input id="media" name="media" placeholder="Paste a Google Drive/Facebook/other share link"></div>
+        <div class="field full">
+          <label for="media">Upload Photo / Video (optional)</label>
+          <input
+            id="media"
+            name="media"
+            type="file"
+            accept="image/*,video/*"
+            >
+          <small>Upload a photo or video showing the problem.</small>
+        </div>
         <div class="full">
           <button class="btn btn-primary" style="width:100%" type="submit">Submit Booking Request</button>
           <p class="form-note">By submitting, you agree that the information provided is for service scheduling and assessment.</p>
@@ -343,7 +352,9 @@ const N8N_WEBHOOK_URL = "https://therizen.app.n8n.cloud/webhook-test/cca9edd4-eb
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const data = Object.fromEntries(new FormData(form).entries());
+const formData = new FormData(form);
+formData.append("source", "Therizen Services Website");
+formData.append("submittedAt", new Date().toISOString());
   const button = form.querySelector("button");
   button.disabled = true;
   button.textContent = "Sending...";
